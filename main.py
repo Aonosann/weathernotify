@@ -31,7 +31,7 @@ elif int(temps[1]) >= 28:
 else:
     message += "過ごしやすい気温です"
 
-message += "---------------"
+message += "\n---------------\n"
 
 # Discordに送信
 webhook_url = os.environ["DISCORD_WEBHOOK_URL"]
