@@ -1,4 +1,5 @@
 import requests
+import os
 
 url = "https://www.jma.go.jp/bosai/forecast/data/forecast/130000.json"
 response = requests.get(url)
@@ -14,18 +15,24 @@ for a in temp_areas:
         temps = a["temps"]
         break
 
-print(f"{area_name}の今日の天気: {today_weather}")
-print(f"降水確率: {today_pop}%")
-print(f"気温: 最低{temps[0]}℃ / 最高{temps[1]}℃")
+message = f"{area_name}の今日の天気: {today_weather}\n"
+message += f"降水確率: {today_pop}%\n"
+message += f"気温: 最低{temps[0]}℃ / 最高{temps[1]}℃\n"
 
 if int(today_pop) >= 30:
-    print("傘を持っていきましょう")
-else: 
-    print("傘は大丈夫そうです")
+    message += "傘を持っていきましょう\n"
+else:
+    message += "傘は大丈夫そうです\n"
 
 if int(temps[1]) <= 20:
-    print("上着があると安心です")
+    message += "上着があると安心です"
 elif int(temps[1]) >= 28:
-    print("薄着で大丈夫そうです")
+    message += "薄着で大丈夫そうです"
 else:
-    print("過ごしやすい気温です")
+    message += "過ごしやすい気温です"
+
+# Discordに送信
+webhook_url = os.environ["DISCORD_WEBHOOK_URL"]
+requests.post(webhook_url, json={"content": message})
+
+print("送信しました")
