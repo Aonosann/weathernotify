@@ -31,6 +31,8 @@ elif int(temps[1]) >= 28:
 else:
     message += "過ごしやすい気温です"
 
+message += "---------------"
+
 # Discordに送信
 webhook_url = os.environ["DISCORD_WEBHOOK_URL"]
 requests.post(webhook_url, json={"content": message})
