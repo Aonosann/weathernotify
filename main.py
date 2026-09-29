@@ -1,6 +1,5 @@
 import requests
 import os
-
 url = "https://www.jma.go.jp/bosai/forecast/data/forecast/130000.json"
 response = requests.get(url)
 data = response.json()
@@ -17,16 +16,16 @@ for a in temp_areas:
 
 message = f"{area_name}の今日の天気: {today_weather}\n"
 message += f"降水確率: {today_pop}%\n"
-message += f"気温: 最低{temps[0]}℃ / 最高{temps[1]}℃\n"
+message += f"気温: {temps[0]}℃\n"
 
 if int(today_pop) >= 30:
     message += "傘を持っていきましょう\n"
 else:
     message += "傘は大丈夫そうです\n"
 
-if int(temps[1]) <= 20:
+if int(temps[0]) <= 20:
     message += "上着があると安心です"
-elif int(temps[1]) >= 28:
+elif int(temps[0]) >= 28:
     message += "薄着で大丈夫そうです"
 else:
     message += "過ごしやすい気温です"
